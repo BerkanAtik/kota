@@ -1,0 +1,7 @@
+﻿<Application x:Class="Kota.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ShutdownMode="OnExplicitShutdown">
+    <!-- Brushes are filled in by Theme.Apply to follow the Windows light/dark setting. -->
+    <Application.Resources />
+</Application>

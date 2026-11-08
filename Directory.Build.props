@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Version>0.1.0</Version>
+    <Authors>BerkanAtik</Authors>
+    <Product>Kota</Product>
+    <Copyright>Copyright (c) 2026 BerkanAtik</Copyright>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/BerkanAtik/kota</RepositoryUrl>
+  </PropertyGroup>
+</Project>

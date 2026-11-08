@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Kota.App/Kota.App.csproj" />
+    <Project Path="src/Kota.Core/Kota.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Kota.Core.Tests/Kota.Core.Tests.csproj" />
+  </Folder>
+</Solution>

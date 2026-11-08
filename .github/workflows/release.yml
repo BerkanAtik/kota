@@ -1,0 +1,43 @@
+name: Release
+
+# Push a tag like v0.1.0 to build and publish a GitHub release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - run: dotnet test Kota.slnx -c Release
+
+      - name: Publish
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          foreach ($rid in "win-x64", "win-arm64") {
+            dotnet publish src/Kota.App -c Release -r $rid --self-contained true `
+              -p:Version=$version -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true `
+              -p:EnableCompressionInSingleFile=true -o "out/$rid"
+            dotnet publish src/Kota.App -c Release -r $rid --self-contained false `
+              -p:Version=$version -p:PublishSingleFile=true -o "out/$rid-small"
+            New-Item -ItemType Directory -Force dist | Out-Null
+            Copy-Item "out/$rid/Kota.exe" "dist/Kota-$rid.exe"
+            Copy-Item "out/$rid-small/Kota.exe" "dist/Kota-$rid-small.exe"
+          }
+          Get-FileHash dist/*.exe -Algorithm SHA256 |
+            ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" } |
+            Set-Content dist/SHA256SUMS.txt
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
