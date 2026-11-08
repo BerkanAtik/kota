@@ -23,6 +23,8 @@ English · [Türkçe](README.tr.md)
 You are deep in a task and Claude Code stops: *"5-hour limit reached"*. Kota keeps the number in the corner of
 your screen and warns you early, so you can plan around it.
 
+*Kota* is Turkish for "quota".
+
 ## Features
 
 - **Live percentage in the tray icon.** The icon turns green, amber or red as you use your limit.
