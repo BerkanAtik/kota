@@ -14,7 +14,7 @@ A tiny, native Windows tray app. No Electron, no WSL, no Python, no account.
 
 English · [Türkçe](README.tr.md)
 
-<img src="docs/screenshot.png" width="400" alt="Kota flyout showing Claude and Codex limits, a 7-day chart and top projects" />
+<img src="docs/demo.gif" width="400" alt="Kota flyout: the 5-hour limit fills up, turns amber then red, and Kota warns when it will run out" />
 
 </div>
 

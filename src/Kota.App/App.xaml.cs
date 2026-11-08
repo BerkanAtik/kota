@@ -48,7 +48,7 @@ public partial class App : Application
         StartupRegistration.RepairPathIfEnabled();
 
         bool HasArg(string name) => Array.Exists(e.Args, a => a.Equals(name, StringComparison.OrdinalIgnoreCase));
-        _tray = new TrayController(settings, demo: HasArg("--demo"));
+        _tray = new TrayController(settings, demo: HasArg("--demo"), animateDemo: HasArg("--animate"));
         _tray.Start();
         if (HasArg("--show")) _tray.ShowFlyout();
     }

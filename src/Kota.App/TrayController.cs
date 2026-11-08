@@ -50,12 +50,13 @@ sealed class TrayController : IDisposable
     Drawing.Icon? _currentIcon;
     string? _iconText;
 
-    readonly bool _demo;
+    readonly bool _demo, _animateDemo;
 
-    public TrayController(Settings settings, bool demo = false)
+    public TrayController(Settings settings, bool demo = false, bool animateDemo = false)
     {
         _settings = settings;
-        _demo = demo;
+        _demo = demo || animateDemo;
+        _animateDemo = animateDemo;
         _http.DefaultRequestHeaders.UserAgent.ParseAdd($"Kota/{Version} (+{RepoUrl})");
         _claude = new ClaudeLimitsClient(_http, KnownPaths.ClaudeDir);
         _timer.Tick += (_, _) => Refresh(forceClaude: false);
@@ -77,6 +78,23 @@ sealed class TrayController : IDisposable
         SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
         _timer.Start();
         Refresh(forceClaude: true);
+        if (_animateDemo) StartDemoAnimation();
+    }
+
+    /// <summary>For the README GIF: a 7-second loop where the 5-hour limit fills from 48% to 96%.</summary>
+    void StartDemoAnimation()
+    {
+        var start = DateTime.UtcNow;
+        var animation = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
+        animation.Tick += (_, _) =>
+        {
+            double t = (DateTime.UtcNow - start).TotalSeconds % 7.0;
+            double k = Math.Clamp((t - 1.0) / 4.0, 0, 1); // hold 1 s, fill for 4 s, hold 2 s
+            k = k * k * (3 - 2 * k);
+            DemoData.SessionPercent = 48 + (96 - 48) * k;
+            Refresh(forceClaude: false);
+        };
+        animation.Start();
     }
 
     void Refresh(bool forceClaude)

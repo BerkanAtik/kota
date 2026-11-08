@@ -7,9 +7,12 @@ namespace Kota.App;
 /// <summary>Sample data for screenshots and UI work: run Kota with --demo.</summary>
 static class DemoData
 {
+    /// <summary>Claude's 5-hour usage; --animate moves it to show the colors and pace text changing.</summary>
+    public static double SessionPercent { get; set; } = 72;
+
     public static ProviderLimits Claude(DateTimeOffset now) => new(Provider.Claude,
     [
-        new LimitWindow("five_hour", 72, now.AddMinutes(110), TimeSpan.FromHours(5)),
+        new LimitWindow("five_hour", SessionPercent, now.AddMinutes(110), TimeSpan.FromHours(5)),
         new LimitWindow("seven_day", 41, now.AddHours(76), TimeSpan.FromDays(7)),
     ], "max", now, now);
 
