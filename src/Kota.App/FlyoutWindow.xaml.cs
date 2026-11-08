@@ -79,7 +79,7 @@ public partial class FlyoutWindow : Window
 
     internal void Render(AppState s)
     {
-        UpdatedText.Text = s.LastUpdated is { } u ? L.F("Updated", u.ToLocalTime().ToString("HH:mm", L.Culture)) : "";
+        UpdatedText.Text = s.LastUpdated is { } u ? L.F("Updated", u.ToLocalTime().ToString("t", L.Culture)) : "";
         RefreshButton.ToolTip = L.T("RefreshNow");
         MenuButton.ToolTip = L.T("Settings");
 

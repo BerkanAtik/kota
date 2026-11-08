@@ -50,9 +50,12 @@ sealed class TrayController : IDisposable
     Drawing.Icon? _currentIcon;
     string? _iconText;
 
-    public TrayController(Settings settings)
+    readonly bool _demo;
+
+    public TrayController(Settings settings, bool demo = false)
     {
         _settings = settings;
+        _demo = demo;
         _http.DefaultRequestHeaders.UserAgent.ParseAdd($"Kota/{Version} (+{RepoUrl})");
         _claude = new ClaudeLimitsClient(_http, KnownPaths.ClaudeDir);
         _timer.Tick += (_, _) => Refresh(forceClaude: false);
@@ -78,6 +81,16 @@ sealed class TrayController : IDisposable
 
     void Refresh(bool forceClaude)
     {
+        if (_demo)
+        {
+            var now = DateTimeOffset.UtcNow;
+            _claudeLimits = DemoData.Claude(now);
+            _codexLimits = DemoData.Codex(now);
+            _usage = DemoData.Usage(now);
+            _lastUpdated = now;
+            UpdateUi();
+            return;
+        }
         _ = RefreshLimitsAsync(forceClaude);
         _ = RefreshHistoryAsync();
     }

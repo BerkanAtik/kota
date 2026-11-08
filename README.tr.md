@@ -70,7 +70,8 @@ Bu klasörleri taşıdıysan `CLAUDE_CONFIG_DIR` ve `CODEX_HOME` ortam değişke
 git clone https://github.com/BerkanAtik/kota
 cd kota
 dotnet test
-dotnet run --project src/Kota.App -- --show
+dotnet run --project src/Kota.App -- --show          # gerçek veri
+dotnet run --project src/Kota.App -- --show --demo   # örnek veri, ekran görüntüleri için
 ```
 
 Windows 10 veya 11 üzerinde .NET 10 SDK gerekir. Veri okuma ve hesaplamalar `src/Kota.Core` içinde, testleri yazılı. WPF tepsi uygulaması `src/Kota.App` içinde.

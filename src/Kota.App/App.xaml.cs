@@ -47,9 +47,10 @@ public partial class App : Application
         Theme.Apply(Resources);
         StartupRegistration.RepairPathIfEnabled();
 
-        _tray = new TrayController(settings);
+        bool HasArg(string name) => Array.Exists(e.Args, a => a.Equals(name, StringComparison.OrdinalIgnoreCase));
+        _tray = new TrayController(settings, demo: HasArg("--demo"));
         _tray.Start();
-        if (Array.Exists(e.Args, a => a.Equals("--show", StringComparison.OrdinalIgnoreCase))) _tray.ShowFlyout();
+        if (HasArg("--show")) _tray.ShowFlyout();
     }
 
     protected override void OnExit(ExitEventArgs e)

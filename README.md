@@ -74,7 +74,8 @@ small scan cache) stays in `%LOCALAPPDATA%\Kota`.
 git clone https://github.com/BerkanAtik/kota
 cd kota
 dotnet test
-dotnet run --project src/Kota.App -- --show
+dotnet run --project src/Kota.App -- --show          # real data
+dotnet run --project src/Kota.App -- --show --demo   # sample data, for screenshots
 ```
 
 Requires the .NET 10 SDK on Windows 10 or 11. The parsing and math are in `src/Kota.Core` and covered by tests. The WPF tray app is in `src/Kota.App`.
